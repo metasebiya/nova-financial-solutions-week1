@@ -100,9 +100,31 @@ def time_series_analysis(df):
 
     # Plot 2: Frequency over hour
     fig2, ax2 = plt.subplots()
-    df['hour_trend'].value_counts().sort_index().plot(kind='line', ax=ax2,title='Article Publication Frequency Over Time')
+    df['hour_trend'].hist(bins=24, ax=ax2,title='Article Publication Frequency Over Time')
     ax2.set_xlabel('Hour')
     ax2.set_ylabel('Number of Articles')
 
     return fig1, fig2
 
+def publisher_analysis(df):
+    """
+    This function performs a publisher analysis on financial data from various sources
+    Args:
+        df: pd.DataFrame
+
+    Returns:
+
+    """
+    # Plot1: Distribution of publication of news feeds
+    fig1, ax1 = plt.subplots()
+    df['publisher'].value_counts().hist(bins=24, ax=ax1, title='Publishers Over news feeds')
+    ax1.set_xlabel('Count')
+    ax1.set_ylabel('Number of Articles')
+
+    # Plot2: Distribution of publication over stock type
+    fig2, ax2 = plt.subplots()
+    df['publisher'].value_counts().hist(bins=24, ax=ax2, title='Publishers Over news feeds')
+    ax2.set_xlabel('Count')
+    ax2.set_ylabel('Number of Articles')
+
+    return fig1
