@@ -83,3 +83,26 @@ def text_analysis(df):
 
     return result
 
+def time_series_analysis(df):
+    """
+    This function performs a time series analysis on financial data from various sources
+    Args:
+        df: pd.DataFrame
+
+    Returns: plots of time series analysis
+
+    """
+    # Plot 1: Frequency over date
+    fig1, ax1 = plt.subplots()
+    df['date_trend'].value_counts().sort_index().plot(kind='line', ax=ax1,title='Article Publication Frequency Over Date')
+    ax1.set_xlabel('Date')
+    ax1.set_ylabel('Number of Articles')
+
+    # Plot 2: Frequency over hour
+    fig2, ax2 = plt.subplots()
+    df['hour_trend'].value_counts().sort_index().plot(kind='line', ax=ax2,title='Article Publication Frequency Over Time')
+    ax2.set_xlabel('Hour')
+    ax2.set_ylabel('Number of Articles')
+
+    return fig1, fig2
+
