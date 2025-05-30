@@ -7,6 +7,7 @@ for the nova-financial-solutions-week1 project.
 Author: [Metasebiya Bizuneh]
 Created: May 29, 2025
 """
+import re
 from typing import Dict
 import pandas as pd
 import load_data as ld
@@ -44,11 +45,11 @@ def descriptive_statistics(df):
     """
     descriptive_statistics_df = {}
     #compute headline length
-    #df["headline_length"] = df["headline"].str.len()
-    descriptive_statistics_df["headline_length"] = df["headline"].str.len()
+    df["headline_length"] = df["headline"].str.len()
+    descriptive_statistics_df['headline_length'] = df["headline_length"].describe()
     #find number of articles with most active publisher
     active_publishers = df["publisher"].value_counts()
-    descriptive_statistics_df["active_publishers"] = active_publishers
+    descriptive_statistics_df['active_publishers'] = active_publishers.describe()
     #Analyze publication time to see trends
     df['date'] = pd.to_datetime(df['date'], format='mixed', utc=True)
     df['date_trend'] = df['date'].dt.date
@@ -69,40 +70,13 @@ def text_analysis(df):
     Returns: Dictionary of keywords/phrases and frequencies
 
     """
-    # result = { }
-    # blob = TextBlob(df["headline"])
-    # # --- Method 1: Extract Noun Phrases ---
-    # noun_phrases = blob.noun_phrases
-    # print("Noun Phrases:")
-    # for phrase in noun_phrases:
-    #     print(f"- {phrase}")
-    #
-    # # --- Method 2: Extract Keywords (Nouns) with POS Tagging ---
-    # words = blob.words  # Tokenize into words
-    # pos_tags = blob.tags  # Get POS tags
-    # nouns = [word for word, pos in pos_tags if pos.startswith('NN')]  # Filter nouns
-    # noun_freq = Counter(nouns)
-    #
-    # print("\nTop 5 Nouns (Frequency-Based):")
-    # for word, freq in noun_freq.most_common(5):
-    #     print(f"- {word}: {freq}")
-    #
-    # # --- Method 3: Combine Noun Phrases and Nouns ---
-    # all_keywords = noun_phrases + nouns
-    # keyword_freq = Counter(all_keywords)
-    #
-    # print("\nTop 5 Keywords/Phrases (Combined):")
-    # for keyword, freq in keyword_freq.most_common(5):
-    #     result["keywords"] = keyword
-    #     result["frequency"] = freq
-    #     print(f"- {keyword}: {freq}")
-    #
-    # return result
+
     # Initialize results dictionary
     results = {
         "noun_phrases": [],
         "nouns": [],
         "combined_keywords": [],
+        "error_message": []
     }
 
     # Validate input
@@ -148,65 +122,76 @@ def text_analysis(df):
     results["nouns"] = [(noun, freq) for noun, freq in noun_freq.most_common()]
     results["combined_keywords"] = [(keyword, freq) for keyword, freq in combined_keyword_freq.most_common()]
 
-    # Print top 5 for each category
-    print("Top 5 Noun Phrases:")
-    for phrase, freq in results["noun_phrases"][:5]:
-        print(f"- {phrase}: {freq}")
-
-    print("\nTop 5 Nouns:")
-    for noun, freq in results["nouns"][:5]:
-        print(f"- {noun}: {freq}")
-
-    print("\nTop 5 Combined Keywords/Phrases:")
-    for keyword, freq in results["combined_keywords"][:5]:
-        print(f"- {keyword}: {freq}")
-
     return results
 
 
 
 def time_series_analysis(df):
     """
-    This function performs a time series analysis on financial data from various sources
+    Performs time series analysis by plotting article frequency over date and hour.
+
     Args:
-        df: pd.DataFrame
+        df (pd.DataFrame): DataFrame containing 'date_trend' and 'hour_trend' columns.
 
-    Returns: plots of time series analysis
-
+    Returns:
+        object: each time frequency
     """
-    # Plot 1: Frequency over date
-    fig1, ax1 = plt.subplots()
-    df['date_trend'].value_counts().sort_index().plot(kind='line', ax=ax1,title='Article Publication Frequency Over Date')
-    ax1.set_xlabel('Date')
-    ax1.set_ylabel('Number of Articles')
+    # Ensure datetime and hour fields exist
+    if 'date_trend' not in df or 'hour_trend' not in df:
+        raise ValueError("Expected columns 'date_trend' and 'hour_trend' in DataFrame")
 
-    # Plot 2: Frequency over hour
-    fig2, ax2 = plt.subplots()
-    df['hour_trend'].hist(bins=24, ax=ax2,title='Article Publication Frequency Over Time')
-    ax2.set_xlabel('Hour')
-    ax2.set_ylabel('Number of Articles')
+    df['day'] = df['date'].dt.day_name()
+    df['month'] = df['date'].dt.month_name()
 
-    return fig1, fig2
+    daily_freq = df['date_trend'].value_counts().sort_index()
+    hourly_freq = df['hour_trend'].value_counts().sort_index()
+    day_freq = df['day'].value_counts().sort_index()
+    month_freq = df['month'].value_counts().sort_index()
+
+    return daily_freq, hourly_freq, day_freq, month_freq
+
 
 def publisher_analysis(df):
     """
-    This function performs a publisher analysis on financial data from various sources
+    Analyzes publishers by plotting article counts by publisher.
+
     Args:
-        df: pd.DataFrame
+        df (pd.DataFrame): DataFrame containing 'publisher' column.
 
     Returns:
-
+        result: dictionary with keys 'publisher' and 'counts'
     """
-    # Plot1: Distribution of publication of news feeds
-    fig1, ax1 = plt.subplots()
-    df['publisher'].value_counts().hist(bins=24, ax=ax1, title='Publishers Over news feeds')
-    ax1.set_xlabel('Count')
-    ax1.set_ylabel('Number of Articles')
+    results = {}
+    if 'publisher' not in df:
+        raise ValueError("Expected column 'publisher' in DataFrame")
 
-    # Plot2: Distribution of publication over stock type
-    fig2, ax2 = plt.subplots()
-    df['publisher'].value_counts().hist(bins=24, ax=ax2, title='Publishers Over news feeds')
-    ax2.set_xlabel('Count')
-    ax2.set_ylabel('Number of Articles')
+    #Top 10 publishers
+    publisher_counts = df['publisher'].value_counts()
+    top_publishers = publisher_counts.head(10)
 
-    return fig1
+    results["top_publishers"] = top_publishers
+
+    #Publisher with email name
+    email_publishers = df[df['publisher'].str.contains(r'@', na=False)]
+
+    # Extract domain from email
+    email_publishers['domain'] = email_publishers['publisher'].apply(
+        lambda x: re.findall(r'@([\w.-]+)', x)[0] if '@' in x else None)
+
+    # Count top contributing domains
+    domain_counts = email_publishers['domain'].value_counts()
+    top_domains = domain_counts.head(10)
+
+    # count top publishers based on stock
+    # Drop any missing values in 'publisher' or 'stock'
+    df_filtered = df.dropna(subset=['publisher', 'stock'])
+
+    # Group by stock and publisher, then count
+    publisher_stock_counts = df_filtered.groupby(['stock', 'publisher']).size().reset_index(name='article_count')
+
+    # View top 10 combinations
+    top_combinations = publisher_stock_counts.sort_values(by='article_count', ascending=False).head(10)
+
+    results["top_domains"] = top_domains
+
+    return results
