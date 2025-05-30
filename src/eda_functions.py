@@ -13,7 +13,9 @@ import load_data as ld
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.stats as stats
-
+from textblob import TextBlob
+from collections import Counter
+import nltk
 
 def descriptive_statistics(df) -> Dict[str, any]:
     """
@@ -48,7 +50,36 @@ def text_analysis(df):
     Args:
         df: pd.DataFrame
 
-    Returns:
+    Returns: Dictionary of keywords/phrases and frequencies
 
     """
+    result = { }
+    blob = TextBlob(df["headline"])
+    # --- Method 1: Extract Noun Phrases ---
+    noun_phrases = blob.noun_phrases
+    print("Noun Phrases:")
+    for phrase in noun_phrases:
+        print(f"- {phrase}")
+
+    # --- Method 2: Extract Keywords (Nouns) with POS Tagging ---
+    words = blob.words  # Tokenize into words
+    pos_tags = blob.tags  # Get POS tags
+    nouns = [word for word, pos in pos_tags if pos.startswith('NN')]  # Filter nouns
+    noun_freq = Counter(nouns)
+
+    print("\nTop 5 Nouns (Frequency-Based):")
+    for word, freq in noun_freq.most_common(5):
+        print(f"- {word}: {freq}")
+
+    # --- Method 3: Combine Noun Phrases and Nouns ---
+    all_keywords = noun_phrases + nouns
+    keyword_freq = Counter(all_keywords)
+
+    print("\nTop 5 Keywords/Phrases (Combined):")
+    for keyword, freq in keyword_freq.most_common(5):
+        result["keywords"] = keyword
+        result["frequency"] = freq
+        print(f"- {keyword}: {freq}")
+
+    return result
 
