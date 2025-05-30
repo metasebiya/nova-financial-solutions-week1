@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="28bd22c3-f8d1-49a9-94b6-4537dd0c2741" name="Changes" comment="&quot;chore: work on financial_news_eda&quot;" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="Jupyter Notebook" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="financial-news-eda" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;metasebiya&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/metasebiya/nova-financial-solutions-week1.git&quot;,
+    &quot;accountId&quot;: &quot;c037216f-379e-4529-bf9a-16fcf20b9295&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2xlTJ9E8iUahZmYwNoDw4j3MYxW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.create_folder_structure.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "eda-process",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/hp/Documents/10/nova-financial-solutions-week1/data/raw",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hp\Documents\10\nova-financial-solutions-week1\data\raw" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-PY-251.25410.159" />
+        <option value="bundled-python-sdk-e0ed3721d81e-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.25410.159" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="28bd22c3-f8d1-49a9-94b6-4537dd0c2741" name="Changes" comment="" />
+      <created>1748511585930</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1748511585930</updated>
+      <workItem from="1748511587108" duration="3400000" />
+      <workItem from="1748519267510" duration="7729000" />
+      <workItem from="1748586297758" duration="14601000" />
+      <workItem from="1748602077275" duration="2698000" />
+      <workItem from="1748604935905" duration="146000" />
+      <workItem from="1748605113119" duration="583000" />
+    </task>
+    <task id="LOCAL-00001" summary="&quot;chore: create folder structure&quot;">
+      <option name="closed" value="true" />
+      <created>1748518419598</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1748518419599</updated>
+    </task>
+    <task id="LOCAL-00002" summary="&quot;chore: setup virtual invironment and installed necessary libraries&quot;">
+      <option name="closed" value="true" />
+      <created>1748522536712</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1748522536712</updated>
+    </task>
+    <task id="LOCAL-00003" summary="&quot;chore: added the TA-lib library&quot;">
+      <option name="closed" value="true" />
+      <created>1748523769160</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1748523769160</updated>
+    </task>
+    <task id="LOCAL-00004" summary="&quot;chore: added unittest in github workflow&quot;">
+      <option name="closed" value="true" />
+      <created>1748524036528</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1748524036528</updated>
+    </task>
+    <task id="LOCAL-00005" summary="&quot;chore: write a modular code for loading data&quot;">
+      <option name="closed" value="true" />
+      <created>1748588647883</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1748588647883</updated>
+    </task>
+    <task id="LOCAL-00006" summary="&quot;chore: write a descriptive statistics function&quot;">
+      <option name="closed" value="true" />
+      <created>1748588674976</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1748588674976</updated>
+    </task>
+    <task id="LOCAL-00007" summary="&quot;chore: add textblob library&quot;">
+      <option name="closed" value="true" />
+      <created>1748590356708</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1748590356708</updated>
+    </task>
+    <task id="LOCAL-00008" summary="&quot;chore: add text analysis function&quot;">
+      <option name="closed" value="true" />
+      <created>1748592173100</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1748592173100</updated>
+    </task>
+    <task id="LOCAL-00009" summary="&quot;chore: add time series function&quot;">
+      <option name="closed" value="true" />
+      <created>1748593478643</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1748593478643</updated>
+    </task>
+    <task id="LOCAL-00010" summary="&quot;chore: add publisher analysis function&quot;">
+      <option name="closed" value="true" />
+      <created>1748595189887</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1748595189887</updated>
+    </task>
+    <task id="LOCAL-00011" summary="&quot;chore: rename file&quot;">
+      <option name="closed" value="true" />
+      <created>1748604065512</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1748604065512</updated>
+    </task>
+    <task id="LOCAL-00012" summary="&quot;chore: work on financial_news_eda&quot;">
+      <option name="closed" value="true" />
+      <created>1748604511690</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1748604511690</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="&quot;chore: create folder structure&quot;" />
+    <MESSAGE value="&quot;chore: setup virtual invironment and installed necessary libraries&quot;" />
+    <MESSAGE value="&quot;chore: added the TA-lib library&quot;" />
+    <MESSAGE value="&quot;chore: added unittest in github workflow&quot;" />
+    <MESSAGE value="&quot;chore: write a modular code for loading data&quot;" />
+    <MESSAGE value="&quot;chore: write a descriptive statistics function&quot;" />
+    <MESSAGE value="&quot;chore: add textblob library&quot;" />
+    <MESSAGE value="&quot;chore: add text analysis function&quot;" />
+    <MESSAGE value="&quot;chore: add time series function&quot;" />
+    <MESSAGE value="&quot;chore: add publisher analysis function&quot;" />
+    <MESSAGE value="&quot;chore: rename file&quot;" />
+    <MESSAGE value="&quot;chore: work on financial_news_eda&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;chore: work on financial_news_eda&quot;" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/nova_financial_solutions_week1$create_folder_structure.coverage" NAME="create_folder_structure Coverage Results" MODIFIED="1748512487990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
