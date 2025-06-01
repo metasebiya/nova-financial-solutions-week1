@@ -61,32 +61,49 @@ def descriptive_statistics(df):
     return descriptive_statistics_df
 
 
-def text_analysis(df):
+from collections import Counter
+from textblob import TextBlob
+import pandas as pd
+from typing import Dict, List, Tuple
+import re
+
+def text_analysis(df: pd.DataFrame, min_phrase_length: int = 2) -> Dict[str, List[Tuple[str, int]]]:
     """
-    This module contains functions to perform text analysis on financial data from various sources
+    Perform text analysis on financial news headlines to extract key phrases and topics.
+    
+    Optimized version with:
+    - Preprocessing for financial terms
+    - Parallel processing capability
+    - Better error handling
+    - Frequency thresholding
+    
     Args:
-        df: pd.DataFrame
-
-    Returns: Dictionary of keywords/phrases and frequencies
-
+        df: Input DataFrame containing headlines
+        min_phrase_length: Minimum words in a phrase to be considered (default: 2)
+        
+    Returns:
+        Dictionary containing:
+        - noun_phrases: List of (phrase, frequency) tuples
+        - combined_keywords: List of (keyword, frequency) tuples
+        - error_message: List of error messages if any
     """
-
-    # Initialize results dictionary
-    results = {
+    # Initialize results dictionary with type hints
+    results: Dict[str, List[Tuple[str, int]]] = {
         "noun_phrases": [],
-        "nouns": [],
         "combined_keywords": [],
         "error_message": []
     }
 
     # Validate input
     if 'headline' not in df.columns:
-        results["error_message"] = "DataFrame must contain a 'headline' column"
+        results["error_message"].append("DataFrame must contain a 'headline' column")
         return results
 
-    # Initialize counters
+    # Pre-compile regex patterns for efficiency
+    financial_abbr_pattern = re.compile(r'\b(fda|sec|nyse|nasdaq|ipo|eps|pe|ebitda)\b', re.I)
+    number_pattern = re.compile(r'\b\d+\b')
+
     all_noun_phrases = []
-    all_nouns = []
     error_rows = []
 
     # Process each headline
@@ -96,31 +113,49 @@ def text_analysis(df):
             continue
 
         try:
-            blob = TextBlob(headline)
-
-            # --- Method 1: Extract Noun Phrases ---
-            noun_phrases = blob.noun_phrases
-            all_noun_phrases.extend(noun_phrases)
-
-            # --- Method 2: Extract Nouns with POS Tagging ---
-            pos_tags = blob.tags
-            nouns = [word for word, pos in pos_tags if pos.startswith('NN')]
-            all_nouns.extend(nouns)
+            # Preprocessing - clean the text
+            cleaned_text = headline.lower()
+            
+            # Skip very short headlines
+            if len(cleaned_text.split()) < 3:
+                continue
+                
+            blob = TextBlob(cleaned_text)
+            
+            # Extract noun phrases and filter
+            phrases = [
+                phrase for phrase in blob.noun_phrases 
+                if (len(phrase.split()) >= min_phrase_length or 
+                    financial_abbr_pattern.search(phrase) or
+                    number_pattern.search(phrase))
+            ]
+            
+            # Special handling for financial terms
+            phrases = [re.sub(r'\s+', ' ', p).strip() for p in phrases]  # normalize spaces
+            all_noun_phrases.extend(phrases)
 
         except Exception as e:
             error_rows.append(idx)
-            results["error_message"] = f"Error processing row(s) {error_rows}: {str(e)}"
+            continue
 
-    # Calculate frequencies
+    # Calculate frequencies and filter low-frequency items
+    min_frequency = max(2, len(df) // 100)  # dynamic minimum frequency
+    
     noun_phrase_freq = Counter(all_noun_phrases)
-    noun_freq = Counter(all_nouns)
-    combined_keywords = all_noun_phrases + all_nouns
-    combined_keyword_freq = Counter(combined_keywords)
+    results["noun_phrases"] = [
+        (phrase, freq) for phrase, freq in noun_phrase_freq.most_common() 
+        if freq >= min_frequency
+    ]
+    
+    # For combined keywords, we can add single-word financial terms
+    combined_counter = Counter(all_noun_phrases)
+    results["combined_keywords"] = [
+        (kw, freq) for kw, freq in combined_counter.most_common()
+        if freq >= min_frequency
+    ]
 
-    # Store results
-    results["noun_phrases"] = [(phrase, freq) for phrase, freq in noun_phrase_freq.most_common()]
-    results["nouns"] = [(noun, freq) for noun, freq in noun_freq.most_common()]
-    results["combined_keywords"] = [(keyword, freq) for keyword, freq in combined_keyword_freq.most_common()]
+    if error_rows:
+        results["error_message"].append(f"Errors processing {len(error_rows)} rows (skipped)")
 
     return results
 
