@@ -86,14 +86,8 @@ class FinancialAnalyzer:
             # Initialize the PyNance Analyzer
             analyzer = Analyzer(pynance_data)
 
-            # Example: Calculate cumulative returns
-            # PyNance's returns property provides various return calculations
             cumulative_returns = analyzer.returns.cumulative()
             self.df['Cumulative_Return_PyNance'] = cumulative_returns
-
-            # Example: Calculate daily log returns (another common metric)
-            # log_returns = analyzer.returns.log_daily()
-            # self.df['Log_Daily_Return_PyNance'] = log_returns
 
             print("Calculated PyNance metrics (e.g., Cumulative Return).")
         except Exception as e:
