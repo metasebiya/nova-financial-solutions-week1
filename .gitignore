@@ -1,4 +1,4 @@
 data/
-data/raw/*
-data/protected/*
+data/raw/
+data/protected/
 .venv/
