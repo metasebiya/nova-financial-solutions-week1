@@ -2,3 +2,4 @@ data/
 data/raw/
 data/protected/
 .venv/
+data/raw/raw_analyst_ratings.csv
