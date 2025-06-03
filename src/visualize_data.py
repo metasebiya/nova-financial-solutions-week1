@@ -7,14 +7,53 @@ class Visualizer:
         self.data = data_for_plotting
         sns.set_style("whitegrid") # Set a nice style for plots
 
-
     def plot_stock_prices_with_indicators(self, dataframe, stock_symbol, indicators=['SMA_20', 'RSI']):
-
+        """
+        Plots stock closing prices along with selected technical indicators.
+        """
         if 'Close' not in dataframe.columns:
             print("Error: 'Close' column not found in DataFrame.")
             return
 
         plt.figure(figsize=(15, 8))
+
+        # Plot Close Price
+        plt.subplot(2, 1, 1)
+        plt.plot(dataframe.index, dataframe['Close'], label='Close Price', color='blue', alpha=0.7)
+        for indicator in indicators:
+            if indicator in dataframe.columns and 'SMA' in indicator:
+                plt.plot(dataframe.index, dataframe[indicator], label=indicator, linestyle='--')
+        plt.title(f'{stock_symbol} Stock Price and Moving Averages')
+        plt.xlabel('Date')
+        plt.ylabel('Price')
+        plt.legend()
+        plt.grid(True)
+
+        # Plot other indicators (e.g., RSI, MACD) in a separate subplot
+        if 'RSI' in indicators and 'RSI' in dataframe.columns:
+            plt.subplot(2, 1, 2)
+            plt.plot(dataframe.index, dataframe['RSI'], label='RSI', color='purple')
+            plt.axhline(70, color='red', linestyle='--', alpha=0.6, label='Overbought (70)')
+            plt.axhline(30, color='green', linestyle='--', alpha=0.6, label='Oversold (30)')
+            plt.title(f'{stock_symbol} Relative Strength Index (RSI)')
+            plt.xlabel('Date')
+            plt.ylabel('RSI Value')
+            plt.legend()
+            plt.grid(True)
+        elif 'MACD' in indicators and 'MACD' in dataframe.columns:
+            plt.subplot(2, 1, 2)
+            plt.plot(dataframe.index, dataframe['MACD'], label='MACD', color='orange')
+            plt.plot(dataframe.index, dataframe['MACD_Signal'], label='Signal Line', color='red', linestyle=':')
+            plt.bar(dataframe.index, dataframe['MACD_Hist'], label='Histogram', color='grey', alpha=0.6)
+            plt.title(f'{stock_symbol} MACD Indicator')
+            plt.xlabel('Date')
+            plt.ylabel('MACD Value')
+            plt.legend()
+            plt.grid(True)
+
+        plt.tight_layout()
+        plt.show()
+        plt.close()
        
     def plot_histogram(self, data_series, title, xlabel, ylabel='Frequency', bins=30):
         """
