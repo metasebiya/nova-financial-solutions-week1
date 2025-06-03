@@ -5,7 +5,6 @@ class DataCleaner:
         self.df = dataframe.copy() if dataframe is not None else pd.DataFrame()
 
     def clean_news_data(self):
-        # ... (existing method from Task 1) ...
         if 'date' in self.df.columns:
             self.df['date'] = pd.to_datetime(self.df['date'], errors='coerce').dt.floor('D')
             self.df.dropna(subset=['date'], inplace=True)
