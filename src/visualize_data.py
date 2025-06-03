@@ -183,3 +183,37 @@ class Visualizer:
         plt.tight_layout()
         plt.show()
 
+    def plot_sentiment_vs_returns_scatter(self, df_merged, title="Average Daily Sentiment vs. Daily Stock Returns"):
+        """
+        Plots a scatter plot of average daily sentiment against daily stock returns.
+        """
+        
+        if 'Avg_Daily_Sentiment' not in df_merged.columns or 'Daily_Return' not in df_merged.columns:
+            print("Error: Required columns not found for scatter plot.")
+            return
+
+        plt.figure(figsize=(10, 7))
+        sns.scatterplot(x='Avg_Daily_Sentiment', y='Daily_Return', data=df_merged, alpha=0.6)
+        plt.title(title)
+        plt.xlabel("Average Daily News Sentiment Score")
+        plt.ylabel("Daily Stock Return (%)")
+        plt.grid(True)
+        plt.tight_layout()
+        plt.show()
+        plt.close() # Add this line to close the figure
+
+    def plot_correlation_heatmap(self, df_merged, columns, title="Correlation Heatmap"):
+        """
+        Plots a correlation heatmap for selected columns.
+        """
+        if not all(col in df_merged.columns for col in columns):
+            print("Error: One or more specified columns not found for heatmap.")
+            return
+
+        correlation_matrix = df_merged[columns].corr()
+        plt.figure(figsize=(8, 6))
+        sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=.5)
+        plt.title(title)
+        plt.tight_layout()
+        plt.show()
+        plt.close() 
